@@ -1,0 +1,6 @@
+parent("p", "a").
+parent("p", "b").
+parent("a", "x").
+parent("b", "y").
+grandparent(P, G) :- parent(P, Q), parent(Q, G).
+cousin(X, Y) :- grandparent(P, X), grandparent(P, Y).

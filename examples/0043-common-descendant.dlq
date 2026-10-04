@@ -1,0 +1,1 @@
+?- common_descendant("a", "b", D).

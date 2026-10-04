@@ -1,0 +1,4 @@
+parent("p", "b").
+parent("p", "c").
+parent("b", "d").
+sibling(X, Y) :- parent(P, X), parent(P, Y).

@@ -1,0 +1,5 @@
+needs("app", "lib").
+needs("lib", "core").
+needs("app", "tool").
+build(X, Y) :- needs(X, Y).
+build(X, Z) :- build(X, Y), needs(Y, Z).

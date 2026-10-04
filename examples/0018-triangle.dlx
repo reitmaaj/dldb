@@ -1,0 +1,4 @@
+edge("a", "b").
+edge("b", "c").
+edge("c", "a").
+tri(X) :- edge(X, Y), edge(Y, Z), edge(Z, X).

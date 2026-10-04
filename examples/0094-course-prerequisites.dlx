@@ -1,0 +1,5 @@
+prereq("algorithms", "data-structures").
+prereq("data-structures", "programming").
+prereq("algorithms", "discrete-math").
+before(X, Y) :- prereq(X, Y).
+before(X, Z) :- before(X, Y), prereq(Y, Z).

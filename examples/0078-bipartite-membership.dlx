@@ -1,0 +1,3 @@
+member("u1", "g1").
+member("u2", "g1").
+member("u3", "g2").

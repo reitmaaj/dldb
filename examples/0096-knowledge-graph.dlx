@@ -1,0 +1,10 @@
+knows("alice", "bob").
+knows("bob", "carol").
+likes("alice", "music").
+likes("carol", "music").
+likes("bob", "sports").
+μιλάει("alice", "ελληνικά").
+linked(X, Y) :- knows(X, Y).
+linked(X, Z) :- linked(X, Y), knows(Y, Z).
+shared(X, Y, T) :- linked(X, Y), likes(X, T), likes(Y, T).
+polyglot(T) :- μιλάει(X, T).

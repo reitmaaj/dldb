@@ -1,0 +1,7 @@
+defines("b1", "x").
+uses("b3", "x").
+flow("b1", "b2").
+flow("b2", "b3").
+flowstar(X, Y) :- flow(X, Y).
+flowstar(X, Z) :- flowstar(X, Y), flow(Y, Z).
+reaches(D, V) :- defines(D, V), flowstar(D, C), uses(C, V).

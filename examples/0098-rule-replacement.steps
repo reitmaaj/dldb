@@ -1,0 +1,5 @@
+init
+load a
+query ?- reach("a", X).
+replace b
+query ?- reach("a", X).

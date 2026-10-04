@@ -1,0 +1,4 @@
+include("main.h", "a.h").
+include("a.h", "b.h").
+all(X, Y) :- include(X, Y).
+all(X, Z) :- all(X, Y), include(Y, Z).

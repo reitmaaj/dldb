@@ -1,0 +1,882 @@
+@@ 0001-nullary-fact
+! program
+ready().
+! queries
+?- ready().
+@@ 0002-string-fact
+! program
+color("sky", "blue").
+! queries
+?- color("sky", C).
+@@ 0003-integer-fact
+! program
+year(2026).
+! queries
+?- year(2026).
+@@ 0004-two-facts
+! program
+city("paris").
+city("rome").
+! queries
+?- city(C).
+@@ 0005-duplicate-facts
+! program
+id("a").
+id("a").
+id("b").
+! queries
+?- id(X).
+@@ 0006-mixed-types
+! program
+code(42).
+code("42").
+! queries
+?- code(X).
+@@ 0007-arity-identity
+! program
+state().
+state("boot").
+state("a", "b").
+! queries
+?- state().
+?- state(X).
+?- state(X, Y).
+@@ 0008-name-collision
+! program
+q("v").
+p(p) :- q(p).
+! queries
+?- p(X).
+@@ 0009-empty-string
+! program
+label("").
+! queries
+?- label(L).
+@@ 0010-string-escapes
+! program
+text("a\\b").
+quote("say \"hi\"").
+! queries
+?- text(X).
+?- quote(X).
+@@ 0011-canonical-zero
+! program
+n(0).
+n(0).
+! queries
+?- n(X).
+?- n(0).
+@@ 0012-huge-integer
+! program
+big(1234567890123456789012345678901234567890).
+! queries
+?- big(X).
+@@ 0013-copy-rule
+! program
+p("a").
+p("b").
+q(X) :- p(X).
+! queries
+?- q(X).
+@@ 0014-projection
+! program
+r("a", 1).
+r("b", 2).
+first(X) :- r(X, Y).
+! queries
+?- first(X).
+@@ 0015-head-constant
+! program
+p("a").
+tag(X, "t") :- p(X).
+! queries
+?- tag(X, Y).
+@@ 0016-repeated-variable
+! program
+p("a", "a").
+p("a", "b").
+same(X) :- p(X, X).
+! queries
+?- same(X).
+@@ 0017-two-hop
+! program
+edge("a", "b").
+edge("b", "c").
+two(X, Z) :- edge(X, Y), edge(Y, Z).
+! queries
+?- two(X, Z).
+@@ 0018-triangle
+! program
+edge("a", "b").
+edge("b", "c").
+edge("c", "a").
+tri(X) :- edge(X, Y), edge(Y, Z), edge(Z, X).
+! queries
+?- tri(X).
+@@ 0019-join-constant
+! program
+e("a", "k").
+e("b", "j").
+out(X) :- e(X, "k").
+! queries
+?- out(X).
+@@ 0020-nullary-rule
+! program
+ready().
+go() :- ready().
+! queries
+?- go().
+@@ 0021-arity-two-to-one
+! program
+pair("a", "b").
+snd(Y) :- pair(X, Y).
+! queries
+?- snd(Y).
+@@ 0022-duplicate-body
+! program
+p("a").
+p("b").
+d(X) :- p(X), p(X).
+! queries
+?- d(X).
+@@ 0023-three-atom-join
+! program
+e("a", "b").
+e("b", "c").
+e("c", "d").
+three(X, W) :- e(X, Y), e(Y, Z), e(Z, W).
+! queries
+?- three(X, W).
+@@ 0024-cross-product
+! program
+a(1).
+a(2).
+b("x").
+b("y").
+combo(X, Y) :- a(X), b(Y).
+! queries
+?- combo(X, Y).
+@@ 0025-unary-to-binary
+! program
+a(1).
+wire(X, "on") :- a(X).
+! queries
+?- wire(X, S).
+@@ 0026-binary-to-unary
+! program
+pair("a", "b").
+any(X) :- pair(X, Y).
+! queries
+?- any(X).
+@@ 0027-column-permute
+! program
+e("a", "b").
+swap(Y, X) :- e(X, Y).
+! queries
+?- swap(X, Y).
+@@ 0028-two-roles
+! program
+e("a", "b").
+e("b", "c").
+mid(X) :- e(X, Y), e(Y, Z).
+! queries
+?- mid(X).
+@@ 0029-head-projects-subset
+! program
+r("a", "b", "c").
+ab(X, Y) :- r(X, Y, Z).
+! queries
+?- ab(X, Y).
+@@ 0030-constant-only-head
+! program
+p("a").
+ok("a") :- p("a").
+! queries
+?- ok("a").
+@@ 0031-parent-ancestor
+! program
+parent("alice", "bob").
+parent("bob", "carol").
+ancestor(X, Y) :- parent(X, Y).
+ancestor(X, Z) :- ancestor(X, Y), parent(Y, Z).
+! queries
+?- ancestor("alice", X).
+@@ 0032-reachability
+! program
+link("a", "b").
+link("b", "c").
+link("c", "d").
+reach(X, Y) :- link(X, Y).
+reach(X, Z) :- reach(X, Y), link(Y, Z).
+! queries
+?- reach("a", X).
+@@ 0033-reverse-reach
+! program
+link("a", "b").
+link("b", "c").
+link("c", "d").
+reach(X, Y) :- link(X, Y).
+reach(X, Z) :- reach(X, Y), link(Y, Z).
+! queries
+?- reach(X, "d").
+@@ 0034-cycle-reach
+! program
+edge("a", "b").
+edge("b", "c").
+edge("c", "a").
+reach(X, Y) :- edge(X, Y).
+reach(X, Z) :- reach(X, Y), edge(Y, Z).
+! queries
+?- reach("a", "c").
+@@ 0035-even-odd
+! program
+succ(0, 1).
+succ(1, 2).
+succ(2, 3).
+succ(3, 4).
+succ(4, 5).
+even(0).
+even(Y) :- even(X), succ(X, Z), succ(Z, Y).
+odd(Y) :- even(X), succ(X, Y).
+! queries
+?- even(4).
+?- odd(3).
+?- even(3).
+@@ 0036-same-generation
+! program
+parent("p", "b").
+parent("p", "c").
+parent("b", "d").
+sibling(X, Y) :- parent(P, X), parent(P, Y).
+! queries
+?- sibling("b", X).
+@@ 0037-dependency-closure
+! program
+dependency("app", "liba").
+dependency("app", "libb").
+dependency("liba", "libc").
+depends(X, Y) :- dependency(X, Y).
+depends(X, Z) :- depends(X, Y), dependency(Y, Z).
+! queries
+?- depends("app", X).
+@@ 0038-reverse-dependency
+! program
+dependency("app", "liba").
+dependency("app", "libb").
+dependency("liba", "libc").
+depends(X, Y) :- dependency(X, Y).
+depends(X, Z) :- depends(X, Y), dependency(Y, Z).
+! queries
+?- depends(X, "libc").
+@@ 0039-strongly-connected
+! program
+edge("a", "b").
+edge("b", "c").
+edge("c", "a").
+reach(X, Y) :- edge(X, Y).
+reach(X, Z) :- reach(X, Y), edge(Y, Z).
+scc(X, Y) :- reach(X, Y), reach(Y, X).
+! queries
+?- scc("a", X).
+@@ 0040-cycle-member
+! program
+edge("a", "b").
+edge("b", "c").
+edge("c", "a").
+reach(X, Y) :- edge(X, Y).
+reach(X, Z) :- reach(X, Y), edge(Y, Z).
+cyc(X) :- edge(X, Y), reach(Y, X).
+! queries
+?- cyc(X).
+@@ 0041-reach-from-seed
+! program
+seed("a").
+link("a", "b").
+link("b", "c").
+link("x", "y").
+reach(X, Y) :- link(X, Y).
+reach(X, Z) :- reach(X, Y), link(Y, Z).
+from(A, Y) :- seed(A), reach(A, Y).
+! queries
+?- from("a", X).
+@@ 0042-common-ancestor
+! program
+parent("g", "a").
+parent("g", "b").
+parent("a", "x").
+parent("b", "y").
+ancestor(X, Y) :- parent(X, Y).
+ancestor(X, Z) :- ancestor(X, Y), parent(Y, Z).
+common_ancestor(X, Y, A) :- ancestor(A, X), ancestor(A, Y).
+! queries
+?- common_ancestor("x", "y", A).
+@@ 0043-common-descendant
+! program
+parent("g", "a").
+parent("g", "b").
+parent("a", "x").
+parent("b", "y").
+parent("x", "z").
+parent("y", "z").
+ancestor(X, Y) :- parent(X, Y).
+ancestor(X, Z) :- ancestor(X, Y), parent(Y, Z).
+common_descendant(X, Y, D) :- ancestor(X, D), ancestor(Y, D).
+! queries
+?- common_descendant("a", "b", D).
+@@ 0044-shared-grandparent
+! program
+parent("p", "a").
+parent("p", "b").
+parent("a", "x").
+parent("b", "y").
+grandparent(P, G) :- parent(P, Q), parent(Q, G).
+cousin(X, Y) :- grandparent(P, X), grandparent(P, Y).
+! queries
+?- cousin("x", Y).
+@@ 0045-diamond-closure
+! program
+edge("a", "b").
+edge("a", "c").
+edge("b", "d").
+edge("c", "d").
+reach(X, Y) :- edge(X, Y).
+reach(X, Z) :- reach(X, Y), edge(Y, Z).
+! queries
+?- reach("a", X).
+@@ 0046-component-membership
+! program
+link("a", "b").
+link("b", "c").
+link("x", "y").
+reach(X, Y) :- link(X, Y).
+reach(X, Z) :- reach(X, Y), link(Y, Z).
+! queries
+?- reach("a", X).
+?- reach("x", X).
+@@ 0047-two-edge-kinds
+! program
+road("a", "b").
+rail("b", "c").
+road("c", "d").
+conn(X, Y) :- road(X, Y).
+conn(X, Y) :- rail(X, Y).
+reach(X, Y) :- conn(X, Y).
+reach(X, Z) :- reach(X, Y), conn(Y, Z).
+! queries
+?- reach("a", X).
+@@ 0048-two-hop-neighbor
+! program
+link("a", "b").
+link("b", "c").
+link("c", "d").
+hop2(X, Z) :- link(X, Y), link(Y, Z).
+! queries
+?- hop2("a", X).
+@@ 0049-chain-30
+! program
+link("n0", "n1").
+link("n1", "n2").
+link("n2", "n3").
+link("n3", "n4").
+link("n4", "n5").
+link("n5", "n6").
+link("n6", "n7").
+link("n7", "n8").
+link("n8", "n9").
+link("n9", "n10").
+link("n10", "n11").
+link("n11", "n12").
+link("n12", "n13").
+link("n13", "n14").
+link("n14", "n15").
+link("n15", "n16").
+link("n16", "n17").
+link("n17", "n18").
+link("n18", "n19").
+link("n19", "n20").
+link("n20", "n21").
+link("n21", "n22").
+link("n22", "n23").
+link("n23", "n24").
+link("n24", "n25").
+link("n25", "n26").
+link("n26", "n27").
+link("n27", "n28").
+link("n28", "n29").
+link("n29", "n30").
+reach(X, Y) :- link(X, Y).
+reach(X, Z) :- reach(X, Y), link(Y, Z).
+! queries
+?- reach("n0", X).
+?- reach("n0", "n30").
+@@ 0050-star-30
+! program
+hub("h").
+link("h", "l0").
+link("h", "l1").
+link("h", "l2").
+link("h", "l3").
+link("h", "l4").
+link("h", "l5").
+link("h", "l6").
+link("h", "l7").
+link("h", "l8").
+link("h", "l9").
+link("h", "l10").
+link("h", "l11").
+link("h", "l12").
+link("h", "l13").
+link("h", "l14").
+link("h", "l15").
+link("h", "l16").
+link("h", "l17").
+link("h", "l18").
+link("h", "l19").
+link("h", "l20").
+link("h", "l21").
+link("h", "l22").
+link("h", "l23").
+link("h", "l24").
+link("h", "l25").
+link("h", "l26").
+link("h", "l27").
+link("h", "l28").
+link("h", "l29").
+spoke(X) :- hub(H), link(H, X).
+! queries
+?- spoke(X).
+@@ 0051-integer-keyed-closure
+! program
+edge(1, 2).
+edge(2, 3).
+reach(X, Y) :- edge(X, Y).
+reach(X, Z) :- reach(X, Y), edge(Y, Z).
+! queries
+?- reach(1, X).
+@@ 0052-bigint-keyed-closure
+! program
+edge(100000000000000000000000000000001, 100000000000000000000000000000002).
+edge(100000000000000000000000000000002, 100000000000000000000000000000003).
+reach(X, Y) :- edge(X, Y).
+reach(X, Z) :- reach(X, Y), edge(Y, Z).
+! queries
+?- reach(100000000000000000000000000000001, X).
+@@ 0053-greek-identifiers
+! program
+γονέας("α", "β").
+γονέας("β", "γ").
+πρόγονος(X, Y) :- γονέας(X, Y).
+πρόγονος(X, Z) :- πρόγονος(X, Y), γονέας(Y, Z).
+! queries
+?- πρόγονος("α", X).
+@@ 0054-cjk-identifiers
+! program
+祖先("甲", "乙").
+祖先("乙", "丙").
+子孫(X, Y) :- 祖先(X, Y).
+子孫(X, Z) :- 子孫(X, Y), 祖先(Y, Z).
+! queries
+?- 子孫("甲", X).
+@@ 0055-cyrillic-confusables
+! program
+мир("a").
+mir("b").
+! queries
+?- мир(X).
+?- mir(X).
+@@ 0056-escaped-roundtrip
+! program
+text("a\\b").
+quote("say \"hi\"").
+! queries
+?- text(X).
+?- quote(X).
+@@ 0057-nfc-distinct-strings
+! program
+s("\u{e9}").
+s("e\u{301}").
+! queries
+?- s(X).
+@@ 0058-integer-vs-string-join
+! program
+k(1, "one").
+! queries
+?- k(1, X).
+?- k("1", X).
+@@ 0059-unicode-constant-join
+! program
+city("caf\u{e9}").
+! queries
+?- city("caf\u00e9").
+?- city("cafe").
+@@ 0060-mixed-type-relations
+! program
+v(1).
+v("x").
+v("y").
+! queries
+?- v(X).
+@@ 0061-boolean-query
+! program
+p("a").
+! queries
+?- p("a").
+@@ 0062-all-constant-query
+! program
+e("a", "b").
+e("a", "c").
+! queries
+?- e("a", "b").
+@@ 0063-repeated-query-variable
+! program
+p("a", "a").
+p("a", "b").
+! queries
+?- p(X, X).
+@@ 0064-projection-order
+! program
+r("a", 7).
+! queries
+?- r(X, Y).
+@@ 0065-multi-atom-query
+! program
+e("a", "b").
+e("b", "c").
+! queries
+?- e(X, Y), e(Y, Z).
+@@ 0066-bound-and-free
+! program
+e("a", "b").
+f("b", "c").
+! queries
+?- e("a", Y), f(Y, X).
+@@ 0067-query-derived-only
+! program
+parent("a", "b").
+ancestor(X, Y) :- parent(X, Y).
+! queries
+?- ancestor("a", X).
+@@ 0068-query-edb-only
+! program
+parent("a", "b").
+ancestor(X, Y) :- parent(X, Y).
+! queries
+?- parent("a", X).
+@@ 0069-duplicate-results-collapse
+! program
+e("a", "b").
+e("a", "c").
+e("b", "d").
+e("c", "d").
+two(X, Z) :- e(X, Y), e(Y, Z).
+! queries
+?- two("a", X).
+@@ 0070-multi-query-document
+! program
+p("a").
+q("b").
+! queries
+?- p(X).
+?- q(X).
+?- p("a").
+@@ 0071-empty-derived
+! program
+p("a").
+q("b").
+empty(X) :- p(X), q(X).
+! queries
+?- empty(X).
+@@ 0072-nullary-derived-flag
+! program
+flag().
+on() :- flag().
+! queries
+?- on().
+@@ 0073-base-plus-recursive
+! program
+next("a", "b").
+next("b", "c").
+next("c", "d").
+path(X, Y) :- next(X, Y).
+path(X, Z) :- path(X, Y), next(Y, Z).
+! queries
+?- path("a", X).
+@@ 0074-left-linear-recursion
+! program
+edge("a", "b").
+edge("b", "c").
+edge("c", "d").
+reach(X, Y) :- edge(X, Y).
+reach(X, Z) :- reach(X, Y), edge(Y, Z).
+! queries
+?- reach("a", X).
+@@ 0075-right-linear-recursion
+! program
+edge("a", "b").
+edge("b", "c").
+edge("c", "d").
+reach(X, Y) :- edge(X, Y).
+reach(X, Z) :- edge(X, Y), reach(Y, Z).
+! queries
+?- reach("a", X).
+@@ 0076-mutual-level
+! program
+seed("a").
+link("a", "b").
+link("b", "c").
+even(X) :- seed(X).
+even(Y) :- odd(X), link(X, Y).
+odd(Y) :- even(X), link(X, Y).
+! queries
+?- even(X).
+?- odd(X).
+@@ 0077-seed-set-reach
+! program
+seed("a").
+seed("x").
+link("a", "b").
+link("x", "y").
+link("b", "c").
+reach(X, Y) :- link(X, Y).
+reach(X, Z) :- reach(X, Y), link(Y, Z).
+from(A, Y) :- seed(A), reach(A, Y).
+! queries
+?- from("a", X).
+?- from("x", X).
+@@ 0078-bipartite-membership
+! program
+member("u1", "g1").
+member("u2", "g1").
+member("u3", "g2").
+! queries
+?- member(X, "g1").
+@@ 0079-co-publication
+! program
+wrote("anna", "p1").
+wrote("bob", "p1").
+wrote("bob", "p2").
+wrote("cara", "p2").
+coauthor(A, B) :- wrote(A, P), wrote(B, P).
+! queries
+?- coauthor("anna", B).
+@@ 0080-friends-of-friends
+! program
+friend("a", "b").
+friend("b", "a").
+friend("b", "c").
+friend("c", "b").
+fof(X, Z) :- friend(X, Y), friend(Y, Z).
+! queries
+?- fof("a", X).
+@@ 0081-coauthor-network
+! program
+wrote("anna", "p1").
+wrote("bob", "p1").
+wrote("bob", "p2").
+wrote("cara", "p2").
+coauthor(A, B) :- wrote(A, P), wrote(B, P).
+linked(A, B) :- coauthor(A, B).
+linked(A, C) :- linked(A, B), coauthor(B, C).
+! queries
+?- linked("anna", X).
+@@ 0082-role-hierarchy
+! program
+inherit("admin", "editor").
+inherit("editor", "viewer").
+reaches(X, Y) :- inherit(X, Y).
+reaches(X, Z) :- reaches(X, Y), inherit(Y, Z).
+! queries
+?- reaches("admin", X).
+@@ 0083-category-closure
+! program
+sub("electronics", "audio").
+sub("audio", "headphones").
+under(X, Y) :- sub(X, Y).
+under(X, Z) :- under(X, Y), sub(Y, Z).
+! queries
+?- under("electronics", X).
+@@ 0084-include-closure
+! program
+include("main.h", "a.h").
+include("a.h", "b.h").
+all(X, Y) :- include(X, Y).
+all(X, Z) :- all(X, Y), include(Y, Z).
+! queries
+?- all("main.h", X).
+@@ 0085-call-graph-reach
+! program
+calls("main", "helper").
+calls("helper", "util").
+reaches(X, Y) :- calls(X, Y).
+reaches(X, Z) :- reaches(X, Y), calls(Y, Z).
+! queries
+?- reaches("main", X).
+@@ 0086-org-chart
+! program
+reports("ceo", "vp1").
+reports("ceo", "vp2").
+reports("vp1", "eng1").
+reports("vp2", "sales1").
+chain(X, Y) :- reports(X, Y).
+chain(X, Z) :- chain(X, Y), reports(Y, Z).
+! queries
+?- chain("ceo", X).
+@@ 0087-package-deps
+! program
+depends("web", "http").
+depends("http", "tcp").
+depends("tcp", "ip").
+closure(X, Y) :- depends(X, Y).
+closure(X, Z) :- closure(X, Y), depends(Y, Z).
+! queries
+?- closure("web", X).
+@@ 0088-build-prerequisites
+! program
+needs("app", "lib").
+needs("lib", "core").
+needs("app", "tool").
+build(X, Y) :- needs(X, Y).
+build(X, Z) :- build(X, Y), needs(Y, Z).
+! queries
+?- build("app", X).
+@@ 0089-network-routes
+! program
+route("edge", "core").
+route("core", "dc1").
+route("core", "dc2").
+backup("dc1", "dr").
+conn(X, Y) :- route(X, Y).
+conn(X, Y) :- backup(X, Y).
+reach(X, Y) :- conn(X, Y).
+reach(X, Z) :- reach(X, Y), conn(Y, Z).
+! queries
+?- reach("edge", X).
+@@ 0090-rbac-roles
+! program
+grant("alice", "admin").
+inherit("admin", "power").
+inherit("power", "read").
+roles(U, R) :- grant(U, R).
+roles(U, R) :- roles(U, P), inherit(P, R).
+! queries
+?- roles("alice", R).
+@@ 0091-supply-chain
+! program
+supplies("factory", "warehouse").
+supplies("warehouse", "store1").
+supplies("warehouse", "store2").
+downstream(X, Y) :- supplies(X, Y).
+downstream(X, Z) :- downstream(X, Y), supplies(Y, Z).
+! queries
+?- downstream("factory", X).
+@@ 0092-dns-aliases
+! program
+alias("www", "web").
+alias("web", "host1").
+alias("mail", "host2").
+resolves(X, Y) :- alias(X, Y).
+resolves(X, Z) :- resolves(X, Y), alias(Y, Z).
+! queries
+?- resolves("www", X).
+@@ 0093-cert-trust
+! program
+signed("root", "intermediate").
+signed("intermediate", "leaf").
+signed("root", "other").
+trusted(X, Y) :- signed(X, Y).
+trusted(X, Z) :- trusted(X, Y), signed(Y, Z).
+! queries
+?- trusted("root", X).
+@@ 0094-course-prerequisites
+! program
+prereq("algorithms", "data-structures").
+prereq("data-structures", "programming").
+prereq("algorithms", "discrete-math").
+before(X, Y) :- prereq(X, Y).
+before(X, Z) :- before(X, Y), prereq(Y, Z).
+! queries
+?- before("algorithms", X).
+@@ 0095-reaching-definitions
+! program
+defines("b1", "x").
+uses("b3", "x").
+flow("b1", "b2").
+flow("b2", "b3").
+flowstar(X, Y) :- flow(X, Y).
+flowstar(X, Z) :- flowstar(X, Y), flow(Y, Z).
+reaches(D, V) :- defines(D, V), flowstar(D, C), uses(C, V).
+! queries
+?- reaches("b1", V).
+@@ 0096-knowledge-graph
+! program
+knows("alice", "bob").
+knows("bob", "carol").
+likes("alice", "music").
+likes("carol", "music").
+likes("bob", "sports").
+μιλάει("alice", "ελληνικά").
+linked(X, Y) :- knows(X, Y).
+linked(X, Z) :- linked(X, Y), knows(Y, Z).
+shared(X, Y, T) :- linked(X, Y), likes(X, T), likes(Y, T).
+polyglot(T) :- μιλάει(X, T).
+! queries
+?- shared("alice", Y, T).
+?- polyglot(T).
+@@ 0097-edb-idb-overlap
+! program
+edge("a", "b").
+reach("a", "b").
+reach(X, Y) :- edge(X, Y).
+! queries
+?- reach(X, Y).
+@@ 0098-rule-replacement
+! a
+edge("a", "b").
+edge("b", "c").
+reach(X, Y) :- edge(X, Y).
+reach(X, Z) :- reach(X, Y), edge(Y, Z).
+! b
+reach(X, Y) :- edge(X, Y).
+! steps
+init
+load a
+query ?- reach("a", X).
+replace b
+query ?- reach("a", X).
+@@ 0099-persistence
+! a
+p("a").
+derived(X) :- p(X).
+! steps
+init
+load a
+query ?- derived(X).
+reload a
+query ?- derived(X).
+@@ 0100-grand-finale
+! program
+ready().
+state().
+state("boot").
+state("a", "b").
+next("a", "b").
+next("b", "c").
+next("c", "d").
+color("a", "red").
+color("b", "red").
+color("c", "red").
+color("d", "red").
+text("line").
+big(123456789012345678901234567890).
+γονέας("α", "β").
+祖先("甲", "乙").
+reach(X, Y) :- next(X, Y).
+reach(X, Z) :- reach(X, Y), next(Y, Z).
+red_both(X) :- next(X, Y), color(X, "red"), color(Y, "red").
+tagged(X, "state") :- state(X).
+! queries
+?- ready().
+?- reach("a", X).
+?- red_both(X).
+?- tagged(X, Y).
+?- big(X).

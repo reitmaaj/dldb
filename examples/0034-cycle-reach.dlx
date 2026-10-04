@@ -1,0 +1,5 @@
+edge("a", "b").
+edge("b", "c").
+edge("c", "a").
+reach(X, Y) :- edge(X, Y).
+reach(X, Z) :- reach(X, Y), edge(Y, Z).

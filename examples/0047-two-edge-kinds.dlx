@@ -1,0 +1,7 @@
+road("a", "b").
+rail("b", "c").
+road("c", "d").
+conn(X, Y) :- road(X, Y).
+conn(X, Y) :- rail(X, Y).
+reach(X, Y) :- conn(X, Y).
+reach(X, Z) :- reach(X, Y), conn(Y, Z).

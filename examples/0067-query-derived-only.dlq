@@ -1,0 +1,1 @@
+?- ancestor("a", X).

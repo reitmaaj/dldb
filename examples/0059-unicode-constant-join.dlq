@@ -1,0 +1,2 @@
+?- city("caf\u00e9").
+?- city("cafe").

@@ -1,0 +1,5 @@
+next("a", "b").
+next("b", "c").
+next("c", "d").
+path(X, Y) :- next(X, Y).
+path(X, Z) :- path(X, Y), next(Y, Z).

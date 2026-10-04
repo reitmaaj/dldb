@@ -1,0 +1,4 @@
+link("a", "b").
+link("b", "c").
+link("c", "d").
+hop2(X, Z) :- link(X, Y), link(Y, Z).

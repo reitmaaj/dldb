@@ -1,0 +1,8 @@
+route("edge", "core").
+route("core", "dc1").
+route("core", "dc2").
+backup("dc1", "dr").
+conn(X, Y) :- route(X, Y).
+conn(X, Y) :- backup(X, Y).
+reach(X, Y) :- conn(X, Y).
+reach(X, Z) :- reach(X, Y), conn(Y, Z).

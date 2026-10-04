@@ -1,0 +1,5 @@
+grant("alice", "admin").
+inherit("admin", "power").
+inherit("power", "read").
+roles(U, R) :- grant(U, R).
+roles(U, R) :- roles(U, P), inherit(P, R).

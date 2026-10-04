@@ -1,0 +1,19 @@
+ready().
+state().
+state("boot").
+state("a", "b").
+next("a", "b").
+next("b", "c").
+next("c", "d").
+color("a", "red").
+color("b", "red").
+color("c", "red").
+color("d", "red").
+text("line").
+big(123456789012345678901234567890).
+γονέας("α", "β").
+祖先("甲", "乙").
+reach(X, Y) :- next(X, Y).
+reach(X, Z) :- reach(X, Y), next(Y, Z).
+red_both(X) :- next(X, Y), color(X, "red"), color(Y, "red").
+tagged(X, "state") :- state(X).

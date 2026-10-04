@@ -1,0 +1,2 @@
+pair("a", "b").
+any(X) :- pair(X, Y).

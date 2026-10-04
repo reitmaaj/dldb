@@ -1,0 +1,32 @@
+hub("h").
+link("h", "l0").
+link("h", "l1").
+link("h", "l2").
+link("h", "l3").
+link("h", "l4").
+link("h", "l5").
+link("h", "l6").
+link("h", "l7").
+link("h", "l8").
+link("h", "l9").
+link("h", "l10").
+link("h", "l11").
+link("h", "l12").
+link("h", "l13").
+link("h", "l14").
+link("h", "l15").
+link("h", "l16").
+link("h", "l17").
+link("h", "l18").
+link("h", "l19").
+link("h", "l20").
+link("h", "l21").
+link("h", "l22").
+link("h", "l23").
+link("h", "l24").
+link("h", "l25").
+link("h", "l26").
+link("h", "l27").
+link("h", "l28").
+link("h", "l29").
+spoke(X) :- hub(H), link(H, X).

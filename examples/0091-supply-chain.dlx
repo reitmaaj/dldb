@@ -1,0 +1,5 @@
+supplies("factory", "warehouse").
+supplies("warehouse", "store1").
+supplies("warehouse", "store2").
+downstream(X, Y) :- supplies(X, Y).
+downstream(X, Z) :- downstream(X, Y), supplies(Y, Z).

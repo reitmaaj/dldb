@@ -1,0 +1,5 @@
+friend("a", "b").
+friend("b", "a").
+friend("b", "c").
+friend("c", "b").
+fof(X, Z) :- friend(X, Y), friend(Y, Z).

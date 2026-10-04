@@ -1,0 +1,5 @@
+depends("web", "http").
+depends("http", "tcp").
+depends("tcp", "ip").
+closure(X, Y) :- depends(X, Y).
+closure(X, Z) :- closure(X, Y), depends(Y, Z).

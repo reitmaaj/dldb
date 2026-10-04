@@ -1,0 +1,5 @@
+signed("root", "intermediate").
+signed("intermediate", "leaf").
+signed("root", "other").
+trusted(X, Y) :- signed(X, Y).
+trusted(X, Z) :- trusted(X, Y), signed(Y, Z).

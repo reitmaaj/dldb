@@ -1,0 +1,4 @@
+e("a", "b").
+e("b", "c").
+e("c", "d").
+three(X, W) :- e(X, Y), e(Y, Z), e(Z, W).

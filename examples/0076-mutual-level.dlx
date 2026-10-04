@@ -1,0 +1,6 @@
+seed("a").
+link("a", "b").
+link("b", "c").
+even(X) :- seed(X).
+even(Y) :- odd(X), link(X, Y).
+odd(Y) :- even(X), link(X, Y).

@@ -1,0 +1,4 @@
+sub("electronics", "audio").
+sub("audio", "headphones").
+under(X, Y) :- sub(X, Y).
+under(X, Z) :- under(X, Y), sub(Y, Z).

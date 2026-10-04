@@ -1,0 +1,2 @@
+?- shared("alice", Y, T).
+?- polyglot(T).

@@ -1,0 +1,7 @@
+seed("a").
+link("a", "b").
+link("b", "c").
+link("x", "y").
+reach(X, Y) :- link(X, Y).
+reach(X, Z) :- reach(X, Y), link(Y, Z).
+from(A, Y) :- seed(A), reach(A, Y).

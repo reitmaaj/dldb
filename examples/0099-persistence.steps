@@ -1,0 +1,5 @@
+init
+load a
+query ?- derived(X).
+reload a
+query ?- derived(X).

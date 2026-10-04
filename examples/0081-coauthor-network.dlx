@@ -1,0 +1,7 @@
+wrote("anna", "p1").
+wrote("bob", "p1").
+wrote("bob", "p2").
+wrote("cara", "p2").
+coauthor(A, B) :- wrote(A, P), wrote(B, P).
+linked(A, B) :- coauthor(A, B).
+linked(A, C) :- linked(A, B), coauthor(B, C).

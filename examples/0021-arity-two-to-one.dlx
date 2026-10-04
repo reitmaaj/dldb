@@ -1,0 +1,2 @@
+pair("a", "b").
+snd(Y) :- pair(X, Y).

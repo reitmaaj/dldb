@@ -1,0 +1,4 @@
+inherit("admin", "editor").
+inherit("editor", "viewer").
+reaches(X, Y) :- inherit(X, Y).
+reaches(X, Z) :- reaches(X, Y), inherit(Y, Z).

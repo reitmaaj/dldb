@@ -1,0 +1,7 @@
+parent("g", "a").
+parent("g", "b").
+parent("a", "x").
+parent("b", "y").
+ancestor(X, Y) :- parent(X, Y).
+ancestor(X, Z) :- ancestor(X, Y), parent(Y, Z).
+common_ancestor(X, Y, A) :- ancestor(A, X), ancestor(A, Y).

@@ -1,0 +1,5 @@
+dependency("app", "liba").
+dependency("app", "libb").
+dependency("liba", "libc").
+depends(X, Y) :- dependency(X, Y).
+depends(X, Z) :- depends(X, Y), dependency(Y, Z).

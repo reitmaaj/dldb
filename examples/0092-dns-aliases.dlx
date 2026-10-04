@@ -1,0 +1,5 @@
+alias("www", "web").
+alias("web", "host1").
+alias("mail", "host2").
+resolves(X, Y) :- alias(X, Y).
+resolves(X, Z) :- resolves(X, Y), alias(Y, Z).

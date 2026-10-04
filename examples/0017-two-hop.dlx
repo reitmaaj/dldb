@@ -1,0 +1,3 @@
+edge("a", "b").
+edge("b", "c").
+two(X, Z) :- edge(X, Y), edge(Y, Z).

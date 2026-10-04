@@ -1,0 +1,5 @@
+link("a", "b").
+link("b", "c").
+link("c", "d").
+reach(X, Y) :- link(X, Y).
+reach(X, Z) :- reach(X, Y), link(Y, Z).

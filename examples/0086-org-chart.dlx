@@ -1,0 +1,6 @@
+reports("ceo", "vp1").
+reports("ceo", "vp2").
+reports("vp1", "eng1").
+reports("vp2", "sales1").
+chain(X, Y) :- reports(X, Y).
+chain(X, Z) :- chain(X, Y), reports(Y, Z).

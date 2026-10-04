@@ -1,0 +1,5 @@
+?- ready().
+?- reach("a", X).
+?- red_both(X).
+?- tagged(X, Y).
+?- big(X).

@@ -1,0 +1,2 @@
+?- text(X).
+?- quote(X).
